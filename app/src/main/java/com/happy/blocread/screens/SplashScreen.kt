@@ -17,6 +17,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -45,6 +48,7 @@ class SplashScreen: ComponentActivity() {
 
     @Composable
     private fun MainSplashScreen(){
+        val openCoverScreenFlag = remember { mutableStateOf(false) }
         Box(modifier = Modifier
             .fillMaxSize()
             .background(color = CommonUtility.getSplashBackgroundColor())){
@@ -57,18 +61,22 @@ class SplashScreen: ComponentActivity() {
             Text(text = "Getting Started...",
                 color = CommonUtility.getThemeInvertTextColor(),
                 modifier = Modifier
-                    .clickable(enabled = true, onClick = { OpenCoverScreen() })
                     .padding(bottom = 50.dp)
                     .align(Alignment.BottomCenter),
-                fontFamily = FontFamily(CommonUtility.getFontStyle(font = FontType.LIGHT))
+                fontFamily = FontFamily(CommonUtility.getFontStyle(font = FontType.EXTRALIGHT))
             )
         }
+
+        Handler(Looper.myLooper()!!).postDelayed({
+          openCoverScreenFlag.value = true
+        },5000)
+
+        if (openCoverScreenFlag.value) OpenCoverScreen()
     }
 
+    @Composable
     private fun OpenCoverScreen(){
-        mContext.startActivity(Intent(mContext,CoverScreen::class.java))
+        CommonUtility.OpenNewScreen(context = this, screenName = CoverScreen())
     }
-
-
 }
 

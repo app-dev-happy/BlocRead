@@ -1,9 +1,13 @@
 package com.happy.blocread.utility
 
+import android.content.Context
+import android.content.Intent
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -49,6 +53,11 @@ object CommonUtility {
             FontType.ULTRALIGHT -> {FontType.ULTRALIGHT.font}
             else -> { FontType.REGULAR.font }
         }
+    }
+
+    @Composable
+    fun OpenNewScreen(context : ComponentActivity, screenName : ComponentActivity){
+        context.startActivity(Intent(context, screenName::class.java))
     }
 }
 
